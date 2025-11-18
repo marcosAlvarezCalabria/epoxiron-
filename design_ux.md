@@ -263,9 +263,22 @@ Tabla editable con las siguientes columnas:
 
 ### 🎛️ Botones de Acción
 
-1. **💾 Guardar cambios / Guardar borrador**
-2. **✅ Marcar como revisado**
-3. **✏️ Editar piezas individualmente** _(modal opcional)_
+**Layout horizontal (tablet/desktop):**
+- ❌ **Cancelar** (secundario, gris, mínimo 44px)
+- 💾 **Guardar cambios / Guardar borrador** (primario, destacado, mínimo 44px)
+- ✅ **Marcar como revisado** (opcional, según estado)
+
+**Comportamiento botón Cancelar:**
+
+**Modo creación:**
+- Si NO hay cambios → Vuelve al Dashboard
+- Si HAY cambios → Confirmación: "¿Descartar cambios? [Descartar] [Continuar editando]"
+
+**Modo edición:**
+- Si NO hay cambios → Vuelve a pantalla anterior
+- Si HAY cambios → Confirmación: "¿Descartar cambios? [Descartar] [Continuar editando]"
+
+**Atajo de teclado:** `Escape` → Activa botón Cancelar
 
 ---
 
@@ -424,9 +437,21 @@ Tabla con las siguientes columnas:
 
 ### 🎛️ Botones de Acción
 
-- **💾 Guardar / Crear Cliente**
-- **Ubicación:** Al final del formulario
-- **Estado:** Destacado visualmente
+**Layout horizontal (tablet/desktop):**
+- ❌ **Cancelar** (secundario, gris, mínimo 44px)
+- 💾 **Guardar / Crear Cliente** (primario, destacado, mínimo 44px)
+
+**Comportamiento botón Cancelar:**
+
+**Modo creación:**
+- Si NO hay cambios → Vuelve a lista de clientes
+- Si HAY cambios → Confirmación: "¿Descartar cambios? [Descartar] [Continuar editando]"
+
+**Modo edición:**
+- Si NO hay cambios → Vuelve a lista de clientes
+- Si HAY cambios → Confirmación: "¿Descartar cambios? [Continuar editando] [Descartar]"
+
+**Atajo de teclado:** `Escape` → Activa botón Cancelar
 
 ---
 
@@ -598,9 +623,21 @@ Tabla con las siguientes columnas:
 
 ### 🎛️ Botones de Acción
 
-- **💾 Guardar / Crear Tarifa**
-- **Ubicación:** Al final del formulario
-- **Estado:** Destacado visualmente
+**Layout horizontal (tablet/desktop):**
+- ❌ **Cancelar** (secundario, gris, mínimo 44px)
+- 💾 **Guardar / Crear Tarifa** (primario, destacado, mínimo 44px)
+
+**Comportamiento botón Cancelar:**
+
+**Modo creación:**
+- Si NO hay cambios → Vuelve a lista de tarifas
+- Si HAY cambios → Confirmación: "¿Descartar cambios? [Descartar] [Continuar editando]"
+
+**Modo edición:**
+- Si NO hay cambios → Vuelve a lista de tarifas
+- Si HAY cambios → Confirmación: "¿Descartar cambios? [Continuar editando] [Descartar]"
+
+**Atajo de teclado:** `Escape` → Activa botón Cancelar
 
 ---
 

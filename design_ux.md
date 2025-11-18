@@ -28,7 +28,7 @@
 ### 5. Reglas Básicas
 
 - ✅ Validación solo al enviar
-- ⚠️ **Error general:** "Usuario o contraseña incorrectos"
+- ⚠️ **Error general:** "Las credenciales no son correctas. Por favor, verifica tus datos."
 
 ### 6. Layout
 

@@ -33,21 +33,21 @@ Eliminar cliente (solo si no tiene albaranes)
 
 Gestión de tarifas
 
-Crear tarifa
+Crear tarifa ( nombre , y precios en ml y o en metros cuadrados, y si el grosor de la pieza es especial  )
 
 Listar tarifas
 
 Editar tarifa (precios base, mínimos y especiales)
 
-Eliminar tarifas si no están en uso
+Eliminar tarifas si no están en uso 
 
 Gestión de albaranes
 
 Seleccionar cliente para iniciar un albarán
 
-Añadir piezas: tipo, medidas, cantidad, color RAC, precio opcional
+Añadir piezas: nombre , medidas, cantidad, color RAC o especila si el color no es rac , precio opcional
 
-Aplicación automática de tarifas y reglas de negocio
+Aplicación automática de tarifas y reglas de negocio (ejmplo : al crear la tarifa esta incluira un nombre , y cuando creemos un cliente)
 
 Editar albaranes mientras no estén marcados como correctos
 

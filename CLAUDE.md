@@ -268,6 +268,30 @@ export function AlbaranList() {
 
 > **Context:** This is the user's first TypeScript project. They are learning and want to **understand** every line of code, not just copy/paste.
 
+### User Background & Preferred Analogies
+
+**User Experience:**
+- First TypeScript project (learning from scratch)
+- Professional background: Construction and plumbing
+- Prefers hands-on learning ("yo lo iré haciendo" - I'll do it myself)
+
+**MANDATORY - Use Construction & Plumbing Analogies:**
+- 🏗️ **Construction analogies**: blueprints, foundations, building materials, structural integrity, permits, inspections
+- 🔧 **Plumbing analogies**: pipes, valves, water flow, connections, leaks, pressure testing, backflow prevention
+- ✅ **Examples**:
+  - Types = Blueprints (specify exact measurements before building)
+  - Interfaces = Pipe fittings (define how pieces connect)
+  - Type safety = Building inspections (catch problems before going live)
+  - Optional properties = Optional upgrades (air conditioning is optional in a house)
+  - Function types = Plumbing connections (input pipe + output pipe)
+  - Generics = Adjustable wrench (works with different pipe sizes)
+  - Validation (Zod) = Pressure testing (ensure no leaks before use)
+
+**Teaching Style:**
+- Always relate new concepts to construction/plumbing first
+- Use "como cuando..." (like when...) to connect to his experience
+- Show the "blueprint" (types) before building the "structure" (code)
+
 ### Educational Rules
 
 **MANDATORY - Before Writing ANY Code:**

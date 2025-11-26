@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { renderHook, waitFor } from '@testing-library/react'
+import { renderHook, waitFor, act } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useLogin } from '../useLogin'
 import { useAuthStore } from '../../stores/authStore'
@@ -46,12 +46,16 @@ describe('useLogin', () => {
       wrapper: createWrapper()
     })
 
-    result.current.login({
-      email: 'test@test.com',
-      password: '123456'
+    act(() => {
+      result.current.login({
+        email: 'test@test.com',
+        password: '123456'
+      })
     })
 
-    expect(result.current.isLoading).toBe(true)
+    await waitFor(() => {
+      expect(result.current.isLoading).toBe(true)
+    })
   })
 
   it('debe guardar usuario en el store después de login exitoso', async () => {

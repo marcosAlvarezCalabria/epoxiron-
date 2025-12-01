@@ -24,10 +24,11 @@ export function useLogin() {
     }
   })
 
-  // Retornar 3 cosas útiles
+  // Retornar 4 cosas útiles
   return {
-    login: mutation.mutate,      // Función para hacer login
+    login: mutation.mutate,        // Función para hacer login
     isLoading: mutation.isPending, // ¿Está cargando?
-    error: mutation.error        // ¿Hubo error?
+    error: mutation.error,         // ¿Hubo error?
+    isSuccess: mutation.isSuccess  // ¿Login exitoso?
   }
 }

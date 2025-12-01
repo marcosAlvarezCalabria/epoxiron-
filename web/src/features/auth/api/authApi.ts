@@ -1,5 +1,8 @@
 import type {AuthResponse, LoginData } from "../types/auth";
 
+
+
+
 export async function login(data: LoginData): Promise<AuthResponse> {
   const response = await fetch('http://localhost:3000/api/auth/login', {
     method: 'POST',
@@ -18,10 +21,10 @@ export async function login(data: LoginData): Promise<AuthResponse> {
   }
 
   const result: AuthResponse = await response.json()
-  
+
   localStorage.setItem('auth_token', result.token)
   //Guarda el token en localStorage para mantener la sesión del usuario
-  
+
   return result
 }
 export function logout(): void {

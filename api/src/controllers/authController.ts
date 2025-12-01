@@ -1,6 +1,6 @@
-import { Request, Response } from "express";    
+import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import type { LoginRequest, LoginResponse ,User } from "../types/auth";
 
 // 🔧 USUARIOS FALSOS - Por ahora usamos datos hardcodeados
@@ -11,7 +11,7 @@ const FAKE_USERS = [
     email: 'admin@epoxiron.com',
     name: 'Administrador',
     // Password: "123456" encriptado con bcrypt
-    passwordHash: '$2a$10$8K1p/a0dL3LFZgqOo5mLPeJ4Z5J5p5p5p5p5p5p5p5p5p5p5p5p5O'
+    passwordHash: '$2b$10$P4jDE8EYB.stJZABgpW3T.PyQaeSfpep4HmKp.Sf/cTaaZy6wg2cS'
   }
 ]
 

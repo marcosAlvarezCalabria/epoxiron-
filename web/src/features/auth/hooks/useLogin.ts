@@ -1,34 +1,49 @@
+/**
+ * PRESENTATION HOOK: useLogin
+ *
+ * React hook that adapts LoginUseCase to React.
+ *
+ * Location: Presentation Layer
+ * Reason: React-specific adapter (uses hooks, React Query)
+ * Dependencies: Application (LoginUseCase), Infrastructure (AuthRepository), Domain (AuthException)
+ */
+
 import { useMutation } from '@tanstack/react-query'
-// Herramienta para manejar llamadas asíncronas al servidor
-
-import { login as loginApi } from '../api/authApi'
-// La función que llama al servidor (la que TÚ creaste en authApi.ts)
-
 import { useAuthStore } from '../stores/authStore'
-// El store donde guardamos usuario y token (lo creaste en authStore.ts)
+import { LoginUseCase, type LoginInput } from '@/application/use-cases/LoginUseCase'
+import { AuthRepository } from '@/infrastructure/repositories/AuthRepository'
+import { AuthException } from '@/domain/exceptions/AuthException'
 
-import type { LoginData } from '../types/auth'
-// El tipo: { email: string, password: string }
-
+const authRepository = new AuthRepository()
+const loginUseCase = new LoginUseCase(authRepository)
 
 export function useLogin() {
-  // Obtener la función para guardar usuario
   const { setAuth } = useAuthStore()
 
-  // Configurar la operación de login
   const mutation = useMutation({
-    mutationFn: loginApi,  // Qué función ejecutar
-    
-    onSuccess: (data) => {  // Qué hacer si funciona
-      setAuth(data.user, data.token)  // Guardar en el store
-    }
+    mutationFn: async (input: LoginInput) => {
+      return await loginUseCase.execute(input)
+    },
+
+    onSuccess: (result) => {
+      setAuth(result.user, result.token)
+    },
+
+    onError: (error) => {
+      if (error instanceof AuthException) {
+        console.error(`[Auth Error] ${error.code}: ${error.message}`)
+      } else {
+        console.error('[Technical Error]', error)
+      }
+    },
   })
 
-  // Retornar 4 cosas útiles
   return {
-    login: mutation.mutate,        // Función para hacer login
-    isLoading: mutation.isPending, // ¿Está cargando?
-    error: mutation.error,         // ¿Hubo error?
-    isSuccess: mutation.isSuccess  // ¿Login exitoso?
+    login: mutation.mutate,
+    isLoading: mutation.isPending,
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    error: mutation.error,
+    reset: mutation.reset,
   }
 }

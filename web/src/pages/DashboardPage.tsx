@@ -33,7 +33,7 @@ export function DashboardPage() {
             ✅ ¡Bienvenido al Dashboard!
           </h2>
           <p className="text-gray-600 mb-4">
-            Has iniciado sesión correctamente como <strong>{user?.email}</strong>
+            Has iniciado sesión correctamente como <strong>{user?.email.getValue()}</strong>
           </p>
           <p className="text-gray-500">
             Aquí irá el contenido del sistema de gestión de albaranes...

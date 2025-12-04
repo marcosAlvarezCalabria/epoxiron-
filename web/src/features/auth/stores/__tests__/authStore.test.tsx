@@ -1,6 +1,8 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { useAuthStore } from '../authStore'
-import type { User } from '../../types/auth'
+import { User } from '@/domain/entities/User'
+import { Email } from '@/domain/value-objects/Email'
+import { Token } from '@/domain/value-objects/Token'
 
 describe('authStore', () => {
   beforeEach(() => {
@@ -26,57 +28,64 @@ describe('authStore', () => {
 
   describe('setAuth', () => {
     it('debe guardar usuario y token', () => {
-      const mockUser: User = {
+      const mockUser = new User({
         id: '1',
-        email: 'test@test.com',
-        name: 'Test User'
-      }
-      const mockToken = 'fake-jwt-token'
+        email: new Email('test@test.com'),
+        name: 'Test User',
+        role: 'user'
+      })
+      const mockToken = new Token('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c')
 
       useAuthStore.getState().setAuth(mockUser, mockToken)
 
       const { user, token } = useAuthStore.getState()
-      expect(user).toEqual(mockUser)
+      expect(user).toBe(mockUser)
       expect(token).toBe(mockToken)
     })
 
     it('debe cambiar isAuthenticated a true', () => {
-      const mockUser: User = {
+      const mockUser = new User({
         id: '1',
-        email: 'test@test.com',
-        name: 'Test User'
-      }
+        email: new Email('test@test.com'),
+        name: 'Test User',
+        role: 'user'
+      })
+      const mockToken = new Token('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c')
 
-      useAuthStore.getState().setAuth(mockUser, 'token')
+      useAuthStore.getState().setAuth(mockUser, mockToken)
 
       const { isAuthenticated } = useAuthStore.getState()
       expect(isAuthenticated).toBe(true)
     })
 
-    it('debe aceptar usuario con role opcional', () => {
-      const mockUser: User = {
+    it('debe aceptar usuario con role admin', () => {
+      const mockUser = new User({
         id: '1',
-        email: 'admin@test.com',
+        email: new Email('admin@test.com'),
         name: 'Admin User',
         role: 'admin'
-      }
+      })
+      const mockToken = new Token('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c')
 
-      useAuthStore.getState().setAuth(mockUser, 'token')
+      useAuthStore.getState().setAuth(mockUser, mockToken)
 
       const { user } = useAuthStore.getState()
       expect(user?.role).toBe('admin')
+      expect(user?.esAdmin()).toBe(true)
     })
   })
 
   describe('logout', () => {
     it('debe limpiar usuario y token', () => {
-      const mockUser: User = {
+      const mockUser = new User({
         id: '1',
-        email: 'test@test.com',
-        name: 'Test User'
-      }
+        email: new Email('test@test.com'),
+        name: 'Test User',
+        role: 'user'
+      })
+      const mockToken = new Token('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c')
 
-      useAuthStore.getState().setAuth(mockUser, 'token')
+      useAuthStore.getState().setAuth(mockUser, mockToken)
       useAuthStore.getState().logout()
 
       const { user, token } = useAuthStore.getState()
@@ -85,13 +94,15 @@ describe('authStore', () => {
     })
 
     it('debe cambiar isAuthenticated a false', () => {
-      const mockUser: User = {
+      const mockUser = new User({
         id: '1',
-        email: 'test@test.com',
-        name: 'Test User'
-      }
+        email: new Email('test@test.com'),
+        name: 'Test User',
+        role: 'user'
+      })
+      const mockToken = new Token('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c')
 
-      useAuthStore.getState().setAuth(mockUser, 'token')
+      useAuthStore.getState().setAuth(mockUser, mockToken)
       useAuthStore.getState().logout()
 
       const { isAuthenticated } = useAuthStore.getState()
@@ -103,25 +114,47 @@ describe('authStore', () => {
     })
   })
 
-  describe('actualización de usuario', () => {
-    it('debe permitir actualizar datos del usuario', () => {
-      const mockUser: User = {
+  describe('helpers del store', () => {
+    it('isAdmin debe retornar true para usuario admin', () => {
+      const adminUser = new User({
         id: '1',
-        email: 'test@test.com',
-        name: 'Test User'
-      }
+        email: new Email('admin@test.com'),
+        name: 'Admin',
+        role: 'admin'
+      })
+      const mockToken = new Token('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c')
 
-      useAuthStore.getState().setAuth(mockUser, 'token')
+      useAuthStore.getState().setAuth(adminUser, mockToken)
 
-      const updatedUser: User = {
-        ...mockUser,
-        name: 'Updated Name'
-      }
+      expect(useAuthStore.getState().isAdmin()).toBe(true)
+    })
 
-      useAuthStore.getState().setAuth(updatedUser, 'token')
+    it('isAdmin debe retornar false para usuario normal', () => {
+      const normalUser = new User({
+        id: '1',
+        email: new Email('user@test.com'),
+        name: 'User',
+        role: 'user'
+      })
+      const mockToken = new Token('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c')
 
-      const { user } = useAuthStore.getState()
-      expect(user?.name).toBe('Updated Name')
+      useAuthStore.getState().setAuth(normalUser, mockToken)
+
+      expect(useAuthStore.getState().isAdmin()).toBe(false)
+    })
+
+    it('canDeleteClients debe retornar true para admin', () => {
+      const adminUser = new User({
+        id: '1',
+        email: new Email('admin@test.com'),
+        name: 'Admin',
+        role: 'admin'
+      })
+      const mockToken = new Token('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c')
+
+      useAuthStore.getState().setAuth(adminUser, mockToken)
+
+      expect(useAuthStore.getState().canDeleteClients()).toBe(true)
     })
   })
 })

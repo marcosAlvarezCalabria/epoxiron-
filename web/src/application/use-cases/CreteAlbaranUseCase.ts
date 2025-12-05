@@ -5,6 +5,21 @@ import { DeliveryNoteException } from "@/domain/exceptions/DeliveryNoteException
 
 export interface CreateDeliveryNoteInput {
     customerId: string;
-    date: string;
+    number: string;
+    id: string;
+}
+export interface CreateDeliveryNoteOutput {
+    deliveryNote: DeliveryNote;
+    success: boolean;
+}
 
+export class CreateDeliveryNoteUseCase {
+    //private deliveryNoteRepository: DeliveryNoteRepository;
+
+    constructor(
+        //deliveryNoteRepository: DeliveryNoteRepository
+    ) {
+        //this.deliveryNoteRepository = deliveryNoteRepository;     
+
+    }
 }
